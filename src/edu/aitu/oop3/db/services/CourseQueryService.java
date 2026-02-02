@@ -20,19 +20,17 @@ public class CourseQueryService {
         this.enrollmentRepo = enrollmentRepo;
     }
 
-    // универсальный метод: принимает лямбду-фильтр
     public List<Course> findCourses(Predicate<Course> filter) {
         try {
             return courseRepo.findAll().stream()
-                    .filter(filter) // <-- lambda / functional interface (Predicate)
-                    .sorted(Comparator.comparing(Course::getTitle)) // <-- method reference
+                    .filter(filter) 
+                    .sorted(Comparator.comparing(Course::getTitle)) 
                     .toList();
         } catch (SQLException e) {
             throw new RuntimeException("DB error: " + e.getMessage(), e);
         }
     }
 
-    // новая фича: доступные курсы (есть свободные места)
     public List<Course> availableCourses() {
         return findCourses(course -> {
             try {
@@ -44,7 +42,6 @@ public class CourseQueryService {
         });
     }
 
-    // доступные курсы только выбранного типа (LECTURE/LAB/ONLINE)
     public List<Course> availableCoursesByType(CourseType type) {
         return findCourses(course -> course.getType() == type);
     }
