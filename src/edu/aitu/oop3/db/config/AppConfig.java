@@ -8,7 +8,6 @@ public final class AppConfig {
     private final String password;
 
     private AppConfig() {
-        // Берем из Environment Variables (переменные среды)
         this.url = System.getenv().getOrDefault("DB_URL",
                 "jdbc:postgresql://aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require");
         this.user = System.getenv().getOrDefault("DB_USER", "postgres.eccfvjinhgldnywflozx");
